@@ -4,7 +4,10 @@ import static dev.mhproject.view.ColorsAndEmojis.*;
 
 
 public class BannerMHProject {
-
+    /**
+     * Genera un banner y una descripcion del programa
+     * al comienzo de este
+     */
     public static void banner(){
         System.out.println(AZUL + """
                 ****************************************************
@@ -26,6 +29,10 @@ public class BannerMHProject {
             System.out.println(HERRAMIENTA + " Basado en tasas actualizadas vía API.");
             Thread.sleep(2500);
             System.out.println(CARGANDO + " Presiona cualquier tecla para comenzar...");
+            Thread.sleep(2500);
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            Thread.sleep(2500);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

@@ -1,5 +1,9 @@
 package dev.mhproject.service;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dev.mhproject.model.CurrencyDTO;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
@@ -13,8 +17,14 @@ public class ApiService {
     private final String urlApi;
     private final HttpClient client;
 
+    Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    /**
+     * busca y carga la variable de entorno
+     * en la variable global de la Clase
+     * tambien carga el cliente HttpClient
+     */
     public ApiService() {
-        // Carga las variables del archivo .env ubicado en la raíz del proyecto
+
         Dotenv dotenv = Dotenv.configure()
                 .directory("./") // busca en la raíz
                 .ignoreIfMissing() // no lanza error si no existe
@@ -24,9 +34,15 @@ public class ApiService {
         this.client = HttpClient.newHttpClient();
     }
 
-    public String obtenerTasas(String monedaBase) throws IOException, InterruptedException {
-        // Ejemplo: URL_API=https://api.exchangerate-api.com/v4/latest/
-        String endpoint = urlApi + monedaBase;
+    /**
+     * realiza el request y la response de la api
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public CurrencyDTO loadExchangeRates() throws IOException, InterruptedException {
+
+        String endpoint = urlApi;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
@@ -35,6 +51,8 @@ public class ApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        return response.body(); // Devuelve la respuesta en crudo (JSON)
+        String json = response.body();
+        CurrencyDTO currency = gson.fromJson(json, CurrencyDTO.class);
+        return currency;
     }
 }
