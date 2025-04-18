@@ -45,6 +45,7 @@ public class ColorsAndEmojis {
         public static final String SALUDO = "👋";
         public static final String OK = "✅";
         public static final String ERROR = "❌";
+        public static final String ADVERTENCIA = "🚧";
         public static final String CARGANDO = "⏳";
         public static final String CONSEJO = "🧠";
         public static final String OBJETIVO = "🎯";
@@ -56,10 +57,7 @@ public class ColorsAndEmojis {
 
         // Banderas
         public static final String USA = "🇺🇸";
-        public static final String EUROPA = "🇪🇺";
-        public static final String JAPON = "🇯🇵";
-        public static final String REINO_UNIDO = "🇬🇧";
-        public static final String MEXICO = "🇲🇽";
+        public static final String COLOMBIA = "\uD83C\uDDE8\uD83C\uDDF4";
         public static final String ARGENTINA = "🇦🇷";
         public static final String BRASIL = "🇧🇷";
 

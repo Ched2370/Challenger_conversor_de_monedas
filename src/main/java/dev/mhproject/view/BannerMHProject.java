@@ -21,18 +21,18 @@ public class BannerMHProject {
                 """ + "\t\t\t " + CONVERSION +
                 SUBRAYADO + NEGRITA + "CONVERSOR DE MONEDAS" + RESET + CONVERSION);
         try {
-            Thread.sleep(3000);
-            System.out.println(CONVERSION + " Bienvenido al Conversor de Monedas MH Project");
-            Thread.sleep(2500);
+            Thread.sleep(1500);
+            System.out.println(SALUDO + " Bienvenido al Conversor de Monedas MH Project");
+            Thread.sleep(1500);
             System.out.println(MUNDO + " Convierte monedas de forma simple y rápida.");
-            Thread.sleep(2500);
+            Thread.sleep(1500);
             System.out.println(HERRAMIENTA + " Basado en tasas actualizadas vía API.");
-            Thread.sleep(2500);
-            System.out.println(CARGANDO + " Presiona cualquier tecla para comenzar...");
-            Thread.sleep(2500);
+            Thread.sleep(1500);
+            System.out.println(LANZAMIENTO + " Presiona cualquier tecla para comenzar...");
+            Thread.sleep(1500);
             System.out.print("\033[H\033[2J");
             System.out.flush();
-            Thread.sleep(2500);
+            Thread.sleep(1500);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

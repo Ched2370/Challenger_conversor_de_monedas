@@ -3,7 +3,7 @@ package dev.mhproject.service;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.mhproject.model.CurrencyDTO;
+import dev.mhproject.model.dto.CurrencyDTO;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
@@ -17,7 +17,14 @@ public class ApiService {
     private final String urlApi;
     private final HttpClient client;
 
-    Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
+
+    Gson countries = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
+    
     /**
      * busca y carga la variable de entorno
      * en la variable global de la Clase
@@ -26,8 +33,8 @@ public class ApiService {
     public ApiService() {
 
         Dotenv dotenv = Dotenv.configure()
-                .directory("./") // busca en la raíz
-                .ignoreIfMissing() // no lanza error si no existe
+                .directory("./")
+                .ignoreIfMissing()
                 .load();
 
         this.urlApi = dotenv.get("URL_API");
