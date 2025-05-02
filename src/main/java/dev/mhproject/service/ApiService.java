@@ -38,6 +38,7 @@ public class ApiService {
                 .load();
 
         this.urlApi = dotenv.get("URL_API");
+        //this.urlApi = System.getenv("API_KEY");
         this.client = HttpClient.newHttpClient();
     }
 

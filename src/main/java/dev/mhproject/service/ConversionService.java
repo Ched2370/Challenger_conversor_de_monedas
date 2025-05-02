@@ -20,7 +20,6 @@ public class ConversionService {
         CurrencyDTO currencyDTO = api.loadExchangeRates();
         List<CountryDTO> countryDTOs = cs.loadCountries();
 
-        // Convertir los códigos a mayúsculas
         String upperCodeBase = codeBase.toUpperCase();
         String upperOtherCode = otherCode.toUpperCase();
 
@@ -38,10 +37,10 @@ public class ConversionService {
         // Asignar los nombres de los países
         for (CountryDTO country : countryDTOs) {
             if (country.code().equals(upperCodeBase)) {
-                model.setCountryBase(country.country()); // Asignar nombre del país base
+                model.setCountryBase(country.country());
             }
             if (country.code().equals(upperOtherCode)) {
-                model.setOtherCountry(country.country()); // Asignar nombre del otro país
+                model.setOtherCountry(country.country());
             }
         }
 
@@ -59,18 +58,18 @@ public class ConversionService {
         int parteDecimal = (int) ((cant - parteEntera) * 10000);
 
         System.out.printf(
-                "\n" + AZUL +
+                "\n" + VERDE +
                         "***********************************\n" +
                         " %-2s\n (%-2s) %10s\n" +
                         "-----------------------------------\n" +
                         " %-2s\n (%-2s) %10s\n" +
                         " Ultima actualizacion: %s" +
-                        AZUL +
+                        VERDE +
                         "***********************************\n\n" + RESET,
                 model.getCountryBase(), model.getCodeBase() , CIAN + parteEntera + AMARILLO + "." +
-                        String.format("%04d", parteDecimal) + AZUL,
+                        String.format("%04d", parteDecimal) + VERDE,
                 model.getOtherCountry(), model.getOtherCode() , CIAN + (int)(otherPrice * cant) + AMARILLO + "." +
-                        String.format("%04d", (int)((otherPrice * cant - (int)(otherPrice * cant)) * 10000)) + AZUL,
+                        String.format("%04d", (int)((otherPrice * cant - (int)(otherPrice * cant)) * 10000)) + VERDE,
                 java.time.Instant.ofEpochSecond(model.getDate())
                         .atZone(java.time.ZoneId.systemDefault())
                         .toLocalDate()
