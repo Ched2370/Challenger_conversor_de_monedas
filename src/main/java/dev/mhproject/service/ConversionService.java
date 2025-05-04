@@ -7,7 +7,6 @@ import dev.mhproject.model.entitiy.CurrencyModel;
 import java.io.IOException;
 import java.util.List;
 
-
 import static dev.mhproject.view.ColorsAndEmojis.*;
 
 public class ConversionService {
@@ -16,38 +15,46 @@ public class ConversionService {
     CurrencyModel model = new CurrencyModel();
 
 
-    public CurrencyModel currencyMappingConversor(String codeBase, String otherCode, String conversor) throws IOException, InterruptedException {
-        CurrencyDTO currencyDTO = api.loadExchangeRates();
-        List<CountryDTO> countryDTOs = cs.loadCountries();
+    public CurrencyModel currencyMappingConversor(String codeBase, String otherCode, String conversor) {
+        try {
 
-        String upperCodeBase = codeBase.toUpperCase();
-        String upperOtherCode = otherCode.toUpperCase();
+            CurrencyDTO currencyDTO = api.loadExchangeRates();
+            List<CountryDTO> countryDTOs = cs.loadCountries();
 
-        // Obtener los precios de las conversiones
-        float priceBase = currencyDTO.conversion().get(upperCodeBase);
-        float otherPrice = currencyDTO.conversion().get(upperOtherCode);
+            String upperCodeBase = codeBase.toUpperCase();
+            String upperOtherCode = otherCode.toUpperCase();
 
-        // Configurar el modelo de moneda
-        model.setCodeBase(upperCodeBase);
-        model.setPriceBase(priceBase);
-        model.setOtherCode(upperOtherCode);
-        model.setOtherPrice(otherPrice);
-        model.setDate(currencyDTO.last_update());
+            // Obtener los precios de las conversiones
+            float priceBase = currencyDTO.conversion().get(upperCodeBase);
+            float otherPrice = currencyDTO.conversion().get(upperOtherCode);
 
-        // Asignar los nombres de los países
-        for (CountryDTO country : countryDTOs) {
-            if (country.code().equals(upperCodeBase)) {
-                model.setCountryBase(country.country());
+            model.setCodeBase(upperCodeBase);
+            model.setPriceBase(priceBase);
+            model.setOtherCode(upperOtherCode);
+            model.setOtherPrice(otherPrice);
+            model.setDate(currencyDTO.last_update());
+
+            for (CountryDTO country : countryDTOs) {
+                if (country.code().equals(upperCodeBase)) {
+                    model.setCountryBase(country.country());
+                }
+                if (country.code().equals(upperOtherCode)) {
+                    model.setOtherCountry(country.country());
+                }
             }
-            if (country.code().equals(upperOtherCode)) {
-                model.setOtherCountry(country.country());
-            }
+
+            String sinComa = conversor.replace(",", ".");
+            conversion(model, Float.parseFloat(sinComa));
+
+            return model;
+        } catch (NullPointerException | NumberFormatException e) {
+            System.out.println(ROJO + ERROR + "Valor inexistente." + RESET);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        String sinComa = conversor.replace(",", ".");
-        conversion(model, Float.valueOf(sinComa));
-
-        return model;
+        return null;
     }
 
     public void conversion (CurrencyModel model, float cant) {

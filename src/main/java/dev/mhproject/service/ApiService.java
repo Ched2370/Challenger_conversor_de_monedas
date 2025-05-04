@@ -21,10 +21,6 @@ public class ApiService {
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create();
 
-    Gson countries = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create();
-    
     /**
      * busca y carga la variable de entorno
      * en la variable global de la Clase
@@ -38,29 +34,22 @@ public class ApiService {
                 .load();
 
         this.urlApi = dotenv.get("URL_API");
-        //this.urlApi = System.getenv("API_KEY");
         this.client = HttpClient.newHttpClient();
     }
 
     /**
      * realiza el request y la response de la api
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
      */
     public CurrencyDTO loadExchangeRates() throws IOException, InterruptedException {
 
-        String endpoint = urlApi;
-
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(endpoint))
+                .uri(URI.create(urlApi))
                 .GET()
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         String json = response.body();
-        CurrencyDTO currency = gson.fromJson(json, CurrencyDTO.class);
-        return currency;
+        return gson.fromJson(json, CurrencyDTO.class);
     }
 }

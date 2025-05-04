@@ -3,7 +3,6 @@ package dev.mhproject.service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import dev.mhproject.model.dto.CountryDTO;
-import dev.mhproject.model.entitiy.CountryModel;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,8 +19,7 @@ public class CountryService {
             InputStreamReader reader = new InputStreamReader(is);
 
             Type listType = new TypeToken<List<CountryDTO>>() {}.getType();
-            List<CountryDTO> countries = new Gson().fromJson(reader, listType);
-            return countries;
+            return new Gson().fromJson(reader, listType);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
